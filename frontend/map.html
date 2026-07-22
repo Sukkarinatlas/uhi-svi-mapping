@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แผนที่ UHI &amp; SVI — Chon Buri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="h-screen w-screen overflow-hidden">
+  <div id="cesiumContainer" class="absolute inset-0"></div>
+
+  <!-- loading -->
+  <div id="loading" class="absolute inset-0 z-[60] grid place-items-center bg-slate-950">
+    <div class="text-center">
+      <div class="mx-auto h-14 w-14 rounded-full border-4 border-white/15 border-t-brand-500 animate-spin"></div>
+      <p class="mt-4 text-slate-300 text-sm">กำลังโหลดแผนที่และข้อมูล…</p>
+    </div>
+  </div>
+
+  <!-- TOP BAR -->
+  <header class="absolute top-0 inset-x-0 z-40 p-3">
+    <div class="glass rounded-2xl px-3 py-2 flex items-center gap-3">
+      <a href="index.html" class="btn-tool" title="กลับหน้าแรก">←</a>
+      <div class="flex items-center gap-2">
+        <span class="grid place-items-center h-8 w-8 rounded-lg bg-gradient-to-br from-brand-500 to-orange-500">🌡️</span>
+        <div class="leading-tight">
+          <div class="font-bold text-sm">UHI · SVI Mapping</div>
+          <div class="text-[11px] text-slate-400 -mt-0.5">เกาะความร้อนเมือง &amp; ความเปราะบาง</div>
+        </div>
+      </div>
+      <div class="flex-1"></div>
+      <!-- province select -->
+      <select id="provinceSelect" class="glass rounded-xl px-3 py-2 text-sm bg-transparent outline-none max-w-[180px]">
+        <option value="">— เลือกจังหวัด —</option>
+      </select>
+      <!-- search -->
+      <div class="relative hidden md:block">
+        <input id="searchBox" placeholder="ค้นหาตำบล/อำเภอ…" autocomplete="off"
+               class="glass rounded-xl pl-9 pr-3 py-2 text-sm bg-transparent outline-none w-56"/>
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+        <div id="searchResults" class="hidden absolute mt-1 w-full glass rounded-xl max-h-64 overflow-auto scroll-thin z-50"></div>
+      </div>
+      <!-- basemap -->
+      <select id="basemapSelect" class="glass rounded-xl px-3 py-2 text-sm bg-transparent outline-none" title="แผนที่ฐาน">
+        <option value="osm">OSM Street</option>
+        <option value="topo">OpenTopoMap</option>
+        <option value="sphere">Sphere Hybrid (GISTDA)</option>
+        <option value="dark">Dark (Carto)</option>
+      </select>
+      <button id="dashBtn" class="btn-primary" title="แดชบอร์ด">📊 แดชบอร์ด</button>
+    </div>
+  </header>
+
+  <!-- LEFT PANEL -->
+  <aside id="leftPanel" class="absolute left-3 top-[72px] bottom-[72px] z-30 w-[330px] glass rounded-2xl flex flex-col transition-transform duration-300">
+    <div class="p-3 border-b border-white/10 flex items-center justify-between">
+      <h2 class="font-semibold text-sm flex items-center gap-2">🗂️ ชั้นข้อมูล (Layers)</h2>
+      <button id="collapseLeft" class="btn-tool h-8 w-8" title="ซ่อน/แสดง">‹</button>
+    </div>
+    <div id="layerList" class="p-3 space-y-3 overflow-y-auto scroll-thin flex-1"></div>
+    <div class="p-3 border-t border-white/10 text-[11px] text-slate-400">
+      LST: Landsat 8/9 · มี.ค.–พ.ค. 2025 &nbsp;•&nbsp; ประชากร: DOPA ธ.ค. 2568
+    </div>
+  </aside>
+  <button id="showLeft" class="absolute left-3 top-[72px] z-30 btn-tool glass rounded-xl hidden" title="แสดงชั้นข้อมูล">›</button>
+
+  <!-- RIGHT DASHBOARD -->
+  <aside id="dashboard" class="absolute right-0 top-0 bottom-0 z-40 w-full sm:w-[440px] glass border-l border-white/10 translate-x-full transition-transform duration-300 flex flex-col">
+    <div class="p-4 border-b border-white/10 flex items-center justify-between">
+      <div>
+        <h2 id="dashTitle" class="font-bold">ภาพรวมจังหวัดชลบุรี</h2>
+        <p id="dashSub" class="text-[11px] text-slate-400">ทะเบียนราษฎร ธ.ค. 2568 · LST ฤดูร้อน 2025</p>
+      </div>
+      <button id="closeDash" class="btn-tool h-8 w-8">✕</button>
+    </div>
+    <div id="dashBody" class="p-4 space-y-4 overflow-y-auto scroll-thin flex-1"></div>
+  </aside>
+
+  <!-- BOTTOM TOOLBAR -->
+  <div class="absolute bottom-3 left-1/2 -translate-x-1/2 z-30">
+    <div class="glass rounded-2xl px-2 py-1.5 flex items-center gap-1">
+      <button id="homeBtn" class="btn-tool" title="มุมมองเริ่มต้น">🏠</button>
+      <button id="tiltBtn" class="btn-tool" title="สลับ 2D / 3D">🧭</button>
+      <div class="w-px h-6 bg-white/10 mx-1"></div>
+      <button id="measureBtn" class="btn-tool" title="วัดระยะทาง">📏</button>
+      <button id="clearBtn" class="btn-tool" title="ล้างการวัด">🧹</button>
+      <div class="w-px h-6 bg-white/10 mx-1"></div>
+      <button id="printBtn" class="btn-tool" title="พิมพ์/บันทึกภาพแผนที่">🖨️</button>
+    </div>
+  </div>
+
+  <!-- measure hint -->
+  <div id="measureHint" class="hidden absolute bottom-16 left-1/2 -translate-x-1/2 z-30 glass rounded-full px-4 py-1.5 text-xs">
+    คลิกเพื่อวางจุด · ดับเบิลคลิกเพื่อจบการวัด
+  </div>
+
+  <!-- popup -->
+  <div id="popup" class="map-popup hidden">
+    <div class="glass rounded-2xl overflow-hidden" style="background:var(--panel-solid)">
+      <div id="popupHead" class="px-4 py-2.5 bg-white/5 flex items-center justify-between">
+        <span id="popupTitle" class="font-semibold text-sm"></span>
+        <button id="popupClose" class="text-slate-400 hover:text-white">✕</button>
+      </div>
+      <div id="popupBody" class="px-4 py-3 text-sm space-y-1.5"></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/map/main.js"></script>
+</body>
+</html>

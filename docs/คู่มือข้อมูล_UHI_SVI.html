@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>แนวทางข้อมูลสำหรับ Web Map App หัวข้อ 9 — Urban Heat Island & Social Vulnerability</title>
+<style>
+  body{font-family:"Tahoma","TH Sarabun New",sans-serif;font-size:15px;color:#222;line-height:1.55;max-width:1000px;margin:24px auto;padding:0 18px;}
+  h1{color:#C0392B;font-size:24px;border-bottom:3px solid #C0392B;padding-bottom:6px;}
+  h2{color:#A93226;font-size:19px;margin-top:26px;border-left:6px solid #C0392B;padding-left:10px;}
+  h3{color:#7B241C;font-size:16px;margin-bottom:4px;}
+  table{border-collapse:collapse;width:100%;font-size:12px;margin:12px 0;}
+  th{background:#C0392B;color:#fff;padding:6px;border:1px solid #999;text-align:left;}
+  td{padding:5px 6px;border:1px solid #bbb;vertical-align:top;}
+  tr:nth-child(even){background:#faf3f2;}
+  code{background:#f2f2f2;font-family:Consolas,monospace;padding:1px 4px;border-radius:3px;font-size:12px;}
+  pre{background:#1e1e1e;color:#dcdcdc;padding:12px;border-radius:6px;overflow:auto;font-size:12px;}
+  .tag{display:inline-block;background:#eee;border-radius:4px;padding:1px 6px;font-size:11px;margin-right:4px;}
+  .note{background:#FEF9E7;border-left:5px solid #F1C40F;padding:8px 12px;margin:10px 0;}
+  ul{margin-top:4px;}
+</style>
+</head>
+<body>
+
+<h1>แนวทางและแหล่งข้อมูลสำหรับจัดทำ Web Map App</h1>
+<p><b>หัวข้อที่ 9 — Urban Heat Island and Social Vulnerability Mapping Application</b><br>
+แอปพลิเคชันวิเคราะห์เกาะความร้อนเมือง ประมวลผลอุณหภูมิพื้นผิว (LST) ซ้อนทับข้อมูลประชากร เพื่อระบุพื้นที่วิกฤตทางความร้อนที่มีความเปราะบางทางสังคมสูง — <b>ขอบเขต: ทั่วประเทศไทย</b></p>
+<p style="color:#777;font-size:12px;">กลุ่มที่ 3: Environment &amp; Social Security | จัดทำโดย Claude (Cowork) · 22 กรกฎาคม 2569</p>
+
+<h2>1. สรุปแนวคิดของแอป</h2>
+<p>แอปนี้ตอบโจทย์ด้วยการซ้อน 3 ชั้นข้อมูลหลักเข้าด้วยกัน:</p>
+<ul>
+<li><b>ชั้นความร้อน (Heat):</b> อุณหภูมิพื้นผิว (Land Surface Temperature) จากดาวเทียม → คำนวณดัชนีเกาะความร้อนเมือง (UHI Intensity = LST พื้นที่เมือง − LST พื้นที่ชนบทอ้างอิง)</li>
+<li><b>ชั้นความเปราะบางทางสังคม (Social Vulnerability):</b> ความหนาแน่นประชากร + สัดส่วนกลุ่มเปราะบาง (ผู้สูงอายุ เด็กเล็ก) + ฐานะเศรษฐกิจ + การเข้าถึงบริการสุขภาพ</li>
+<li><b>ผลลัพธ์ (Hotspot วิกฤต):</b> พื้นที่ที่ <b>ความร้อนสูง × ความเปราะบางสูง</b> = พื้นที่ต้องแทรกแซงก่อน (priority zone)</li>
+</ul>
+
+<h2>2. หมวดข้อมูลและวิธีเข้าถึง</h2>
+<p>รวบรวมได้ 40 แหล่ง แบ่ง 5 หมวด รองรับทั้ง <span class="tag">GEE</span> <span class="tag">WMS/WFS</span> <span class="tag">REST API</span> <span class="tag">Static</span> <span class="tag">Tile</span> (รายละเอียดครบในไฟล์ <code>catalog_UHI_SVI.csv</code>):</p>
+
+<h3>A. อุณหภูมิพื้นผิว / ความร้อน (LST) — อินพุตหลัก</h3>
+<p>เลือกตามความละเอียดที่ต้องการ: <b>Landsat 8/9</b> (30 ม.) ดีที่สุดสำหรับระดับย่านเมือง; <b>MODIS</b> (1 กม.) ให้ความถี่รายวันเหมาะทำ climatology; <b>ECOSTRESS</b> (~70 ม.) ให้หลายช่วงเวลาของวัน; <b>ERA5-Land</b> เสริมอุณหภูมิอากาศเพื่อคำนวณ Heat Index</p>
+
+<h3>B. สิ่งแวดล้อม / การใช้ที่ดิน — ปัจจัยขับ UHI</h3>
+<p><b>Dynamic World</b> และ <b>ESA WorldCover</b> (10 ม.) จำแนกพื้นที่สิ่งปลูกสร้าง vs พื้นที่สีเขียว; <b>Sentinel-2</b> คำนวณ NDVI/NDBI; <b>GHSL Built-up</b> และ <b>Open Buildings</b> ให้ความหนาแน่นสิ่งปลูกสร้าง</p>
+
+<h3>C. ประชากร / ความเปราะบางทางสังคม</h3>
+<p><b>WorldPop</b> (100 ม. รวมโครงสร้างอายุ-เพศ) เป็นแกนหลัก; เสริมด้วย <b>GHS-POP, GPW v4.11</b>; <b>Relative Wealth Index</b> และ <b>HRSL</b> ของ Meta เป็นตัวแทนฐานะเศรษฐกิจ-สังคม</p>
+
+<h3>D. หน่วยงานไทย / ข้อมูลราชการ</h3>
+<p><b>DOPA</b> (ประชากรทะเบียนราษฎรระดับตำบล แยกอายุ) และ <b>NSO</b> (สำมะโน 2563) เป็นข้อมูลความเปราะบางที่แม่นระดับพื้นที่; <b>GISTDA sphere</b> ให้ Web Service ภูมิสารสนเทศไทย + THEOS-2; <b>HDX/GADM</b> ให้ขอบเขตตำบล; <b>TMD/Air4Thai/HDC</b> ให้ข้อมูลเรียลไทม์เชิงสุขภาพ</p>
+
+<h3>E. Basemap / โครงสร้าง Web Service</h3>
+<p><b>Longdo Map</b> (ภาษาไทย), OSM, Esri World Imagery เป็น basemap; ผลวิเคราะห์จาก GEE เผยแพร่เป็น <b>XYZ tile</b> ผ่าน <code>getMapId</code> ลงเว็บได้โดยตรง</p>
+
+<div class="note"><b>หมายเหตุสำคัญ:</b> MODIS ใกล้ปลดระวาง — วางแผนใช้ <b>VIIRS (VNP21)</b> ระยะยาว · ข้อมูลราชการไทย (DOPA/NSO/GISTDA) มีความละเอียดเชิงพื้นที่ระดับตำบล จึงควรใช้เป็นหน่วยรายงานผล (aggregate) ส่วนดาวเทียมใช้เป็นชั้นวิเคราะห์เชิงกริด</div>
+
+<h2>3. แนวทางคำนวณ Social Vulnerability Index (SVI) สำหรับไทย</h2>
+<p>ไทยยังไม่มี SVI มาตรฐานระดับพื้นที่ จึงเสนอสร้างดัชนีรวม (composite) จากตัวชี้วัดต่อไปนี้ แล้ว normalize (0–1) และถ่วงน้ำหนัก:</p>
+<ul>
+<li>% ผู้สูงอายุ (65+) และ % เด็กเล็ก (&lt;5) — จาก WorldPop age/sex หรือ DOPA</li>
+<li>ความหนาแน่นประชากร — WorldPop / GHS-POP</li>
+<li>ฐานะเศรษฐกิจ (RWI) หรือรายได้ครัวเรือน (NSO)</li>
+<li>ระยะทางถึงสถานพยาบาลที่ใกล้ที่สุด — OSM/HDC</li>
+<li>สัดส่วนพื้นที่สีเขียว (NDVI ต่ำ = เปราะบางกว่า)</li>
+</ul>
+<p><b>ดัชนีวิกฤต (Priority) = UHI Intensity (normalize) × SVI</b> → จัดชั้น High / Medium / Low ตามภาพในสไลด์</p>
+
+<h2>4. ตัวอย่างโค้ด Google Earth Engine (Landsat LST + WorldPop)</h2>
+<pre>
+// LST จาก Landsat 8/9 (Collection 2 L2) เฉลี่ยฤดูร้อน ทั่วไทย
+var thai = ee.FeatureCollection('FAO/GAUL/2015/level0')
+             .filter(ee.Filter.eq('ADM0_NAME','Thailand'));
+
+function toLST(img){
+  return img.select('ST_B10').multiply(0.00341802).add(149.0)
+            .subtract(273.15).rename('LST_C')     // → องศาเซลเซียส
+            .copyProperties(img, ['system:time_start']);
+}
+var l89 = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
+  .merge(ee.ImageCollection('LANDSAT/LC09/C02/T1_L2'))
+  .filterBounds(thai)
+  .filterDate('2024-03-01','2024-05-31')     // ฤดูร้อน
+  .filter(ee.Filter.lt('CLOUD_COVER',20))
+  .map(toLST);
+var lst = l89.select('LST_C').mean().clip(thai);
+
+// ประชากรเปราะบาง: WorldPop ผู้สูงอายุ (ตัวอย่างรวมกลุ่มอายุ 60+)
+var pop = ee.ImageCollection('WorldPop/GP/100m/pop')
+  .filter(ee.Filter.eq('country','THA'))
+  .filter(ee.Filter.eq('year',2020)).first();
+
+// พื้นที่วิกฤต = LST สูง และ ประชากรหนาแน่น
+var hot = lst.gt(38);                 // เกณฑ์ความร้อน (ปรับได้)
+var dense = pop.gt(50);
+var critical = hot.and(dense);
+
+Map.addLayer(lst,{min:25,max:45,palette:['blue','yellow','red']},'LST (°C)');
+Map.addLayer(critical.selfMask(),{palette:['#8B0000']},'พื้นที่วิกฤต');
+
+// เผยแพร่เป็น XYZ tile ลงเว็บ (Leaflet/MapLibre)
+var mapid = lst.getMapId({min:25,max:45,palette:['blue','yellow','red']});
+print(mapid.urlFormat);   // นำ URL นี้ไปใส่เป็น tile layer
+</pre>
+
+<h2>5. สถาปัตยกรรม Web Map App ที่แนะนำ</h2>
+<ul>
+<li><b>ประมวลผล:</b> Google Earth Engine (Python API + <code>ee.data.getMapId</code>) เป็น backend คำนวณ LST/UHI/SVI แบบ on-the-fly</li>
+<li><b>Front-end แผนที่:</b> Leaflet หรือ MapLibre GL + basemap Longdo/OSM</li>
+<li><b>ชั้นวิเคราะห์:</b> ต่อ XYZ tile จาก GEE (dynamic) + WMS ของ GISTDA</li>
+<li><b>ชั้นขอบเขต/สถิติ:</b> GeoJSON ตำบล (HDX/GADM) join กับ DOPA/NSO ทำ choropleth และ dashboard รายพื้นที่</li>
+<li><b>ข้อมูลเรียลไทม์:</b> ดึง TMD (อุณหภูมิ) และ Air4Thai (คุณภาพอากาศ) ผ่าน REST API</li>
+</ul>
+
+<h2>6. ตารางแหล่งข้อมูลทั้งหมด (40 แหล่ง)</h2>
+<table>
+<tr><th>#</th><th>หมวด</th><th>ชุดข้อมูล</th><th>ผู้ให้บริการ</th><th>การเข้าถึง</th><th>Dataset ID / URL</th><th>ความละเอียด</th><th>ช่วงเวลา</th><th>License</th></tr>
+<tr><td>1</td><td>A</td><td>MODIS Terra LST รายวัน</td><td>NASA LP DAAC</td><td>GEE</td><td>MODIS/061/MOD11A1</td><td>1 km</td><td>2000–ปัจจุบัน</td><td>Public domain</td></tr>
+<tr><td>2</td><td>A</td><td>MODIS Aqua LST รายวัน</td><td>NASA LP DAAC</td><td>GEE</td><td>MODIS/061/MYD11A1</td><td>1 km</td><td>2002–ปัจจุบัน</td><td>Public domain</td></tr>
+<tr><td>3</td><td>A</td><td>MODIS Terra LST 8 วัน</td><td>NASA LP DAAC</td><td>GEE</td><td>MODIS/061/MOD11A2</td><td>1 km</td><td>ทุก 8 วัน</td><td>Public domain</td></tr>
+<tr><td>4</td><td>A</td><td>MODIS Aqua LST 8 วัน</td><td>NASA LP DAAC</td><td>GEE</td><td>MODIS/061/MYD11A2</td><td>1 km</td><td>ทุก 8 วัน</td><td>Public domain</td></tr>
+<tr><td>5</td><td>A</td><td>Landsat 8 C2 L2 (ST_B10)</td><td>USGS</td><td>GEE + Static</td><td>LANDSAT/LC08/C02/T1_L2</td><td>30 m</td><td>2013–ปัจจุบัน</td><td>Public domain</td></tr>
+<tr><td>6</td><td>A</td><td>Landsat 9 C2 L2 (ST_B10)</td><td>USGS</td><td>GEE + Static</td><td>LANDSAT/LC09/C02/T1_L2</td><td>30 m</td><td>2021–ปัจจุบัน</td><td>Public domain</td></tr>
+<tr><td>7</td><td>A</td><td>Landsat 5/7 C2 L2 (ประวัติ)</td><td>USGS</td><td>GEE + Static</td><td>LANDSAT/LT05|LE07/C02/T1_L2</td><td>30 m</td><td>1984–2022</td><td>Public domain</td></tr>
+<tr><td>8</td><td>A</td><td>ECOSTRESS L2 LSTE</td><td>NASA JPL/LP DAAC</td><td>Static/AppEEARS</td><td>ECO_L2T_LSTE (appeears)</td><td>~70 m</td><td>2018–ปัจจุบัน</td><td>NASA open</td></tr>
+<tr><td>9</td><td>A</td><td>VIIRS LST (VNP21A1D)</td><td>NASA LP DAAC</td><td>Static/AppEEARS</td><td>VNP21A1D / VNP21A2</td><td>~1 km</td><td>2012–ปัจจุบัน</td><td>Public domain</td></tr>
+<tr><td>10</td><td>A</td><td>ERA5-Land อุณหภูมิอากาศ</td><td>ECMWF/Copernicus</td><td>GEE + API</td><td>ECMWF/ERA5_LAND/HOURLY</td><td>~11 km</td><td>1950–ปัจจุบัน</td><td>Copernicus</td></tr>
+<tr><td>11</td><td>B</td><td>Dynamic World V1</td><td>Google/WRI</td><td>GEE</td><td>GOOGLE/DYNAMICWORLD/V1</td><td>10 m</td><td>2015–ปัจจุบัน</td><td>CC-BY-4.0</td></tr>
+<tr><td>12</td><td>B</td><td>ESA WorldCover</td><td>ESA</td><td>GEE+Static+WMS</td><td>ESA/WorldCover/v100|v200</td><td>10 m</td><td>2020, 2021</td><td>CC-BY-4.0</td></tr>
+<tr><td>13</td><td>B</td><td>GHSL Built-up Surface</td><td>EC JRC</td><td>GEE + Static</td><td>JRC/GHSL/P2023A/GHS_BUILT_S</td><td>100 m</td><td>1975–2030</td><td>EC free</td></tr>
+<tr><td>14</td><td>B</td><td>Sentinel-2 SR</td><td>ESA</td><td>GEE + API</td><td>COPERNICUS/S2_SR_HARMONIZED</td><td>10 m</td><td>2017–ปัจจุบัน</td><td>Copernicus</td></tr>
+<tr><td>15</td><td>B</td><td>MODIS NDVI 16 วัน</td><td>NASA LP DAAC</td><td>GEE</td><td>MODIS/061/MOD13Q1</td><td>250 m</td><td>2000–ปัจจุบัน</td><td>Public domain</td></tr>
+<tr><td>16</td><td>B</td><td>Google Open Buildings v3</td><td>Google Research</td><td>GEE + Static</td><td>GOOGLE/Research/open-buildings/v3/polygons</td><td>เวกเตอร์</td><td>2023</td><td>CC-BY/ODbL</td></tr>
+<tr><td>17</td><td>B</td><td>Copernicus DEM GLO-30</td><td>ESA</td><td>GEE + Static</td><td>COPERNICUS/DEM/GLO30</td><td>30 m</td><td>2021</td><td>ESA free</td></tr>
+<tr><td>18</td><td>B</td><td>SRTM 30 m</td><td>NASA</td><td>GEE</td><td>USGS/SRTMGL1_003</td><td>30 m</td><td>2000</td><td>Public domain</td></tr>
+<tr><td>19</td><td>C</td><td>WorldPop ประชากร 100 m</td><td>WorldPop</td><td>GEE+Static+API</td><td>WorldPop/GP/100m/pop</td><td>100 m</td><td>2000–2020</td><td>CC-BY-4.0</td></tr>
+<tr><td>20</td><td>C</td><td>WorldPop อายุ-เพศ 100 m</td><td>WorldPop</td><td>GEE + Static</td><td>WorldPop/GP/100m/pop_age_sex</td><td>100 m</td><td>2020</td><td>CC-BY-4.0</td></tr>
+<tr><td>21</td><td>C</td><td>GHSL GHS-POP</td><td>EC JRC</td><td>GEE + Static</td><td>JRC/GHSL/P2023A/GHS_POP</td><td>100 m</td><td>1975–2030</td><td>EC free</td></tr>
+<tr><td>22</td><td>C</td><td>GHSL SMOD</td><td>EC JRC</td><td>GEE + Static</td><td>JRC/GHSL/P2023A/GHS_SMOD</td><td>1 km</td><td>1975–2030</td><td>EC free</td></tr>
+<tr><td>23</td><td>C</td><td>GPW v4.11 ประชากร</td><td>NASA SEDAC/CIESIN</td><td>GEE + Static</td><td>CIESIN/GPWv411/GPW_Population_Count</td><td>~1 km</td><td>2000–2020</td><td>CC-BY-4.0</td></tr>
+<tr><td>24</td><td>C</td><td>GPW v4.11 อายุ/เพศ</td><td>NASA SEDAC/CIESIN</td><td>GEE + Static</td><td>CIESIN/GPWv411/GPW_Basic_Demographic_Characteristics</td><td>~1 km</td><td>2010</td><td>CC-BY-4.0</td></tr>
+<tr><td>25</td><td>C</td><td>Relative Wealth Index</td><td>Meta Data for Good</td><td>Static/HDX</td><td>data.humdata.org (RWI THA)</td><td>~2.4 km</td><td>2021</td><td>CC-BY-4.0</td></tr>
+<tr><td>26</td><td>C</td><td>HRSL (ประชากรละเอียดสูง)</td><td>Meta/CIESIN</td><td>Static/HDX</td><td>data.humdata.org (HRSL THA)</td><td>30 m</td><td>2020</td><td>CC-BY-4.0</td></tr>
+<tr><td>27</td><td>D</td><td>ประชากรทะเบียนราษฎร</td><td>กรมการปกครอง (DOPA)</td><td>Static/เว็บ</td><td>stat.bora.dopa.go.th</td><td>ตำบล</td><td>รายปี</td><td>ราชการเปิด</td></tr>
+<tr><td>28</td><td>D</td><td>สำมะโนประชากรและเคหะ</td><td>NSO</td><td>Static/Open data</td><td>nso.go.th ; data.nso.go.th</td><td>ตำบล</td><td>2563+</td><td>ราชการเปิด</td></tr>
+<tr><td>29</td><td>D</td><td>Open Government Data</td><td>DGA</td><td>REST API/Static</td><td>data.go.th ; gdcatalog.go.th</td><td>หลากหลาย</td><td>ต่อเนื่อง</td><td>DGA Open</td></tr>
+<tr><td>30</td><td>D</td><td>GISTDA Geoportal/sphere</td><td>GISTDA</td><td>WMS/WFS+Static</td><td>sphere.gistda.or.th</td><td>หลากหลาย</td><td>ต่อเนื่อง</td><td>GISTDA</td></tr>
+<tr><td>31</td><td>D</td><td>ขอบเขตการปกครอง (COD)</td><td>OCHA/HDX</td><td>Static/API</td><td>data.humdata.org/dataset/cod-ab-tha</td><td>ADM0–3</td><td>เป็นระยะ</td><td>CC-BY</td></tr>
+<tr><td>32</td><td>D</td><td>GADM ขอบเขตการปกครอง</td><td>GADM</td><td>Static</td><td>gadm.org (THA)</td><td>ระดับ 0–3</td><td>v4.1</td><td>ฟรี (non-com)</td></tr>
+<tr><td>33</td><td>D</td><td>อุณหภูมิ/พยากรณ์อากาศ</td><td>กรมอุตุนิยมวิทยา (TMD)</td><td>REST API</td><td>data.tmd.go.th</td><td>รายสถานี</td><td>เรียลไทม์</td><td>TMD</td></tr>
+<tr><td>34</td><td>D</td><td>Air4Thai คุณภาพอากาศ</td><td>กรมควบคุมมลพิษ</td><td>REST API</td><td>air4thai.pcd.go.th</td><td>รายสถานี</td><td>เรียลไทม์</td><td>ราชการเปิด</td></tr>
+<tr><td>35</td><td>D</td><td>สถานพยาบาล/POI</td><td>OpenStreetMap</td><td>Static/Overpass</td><td>geofabrik.de/asia/thailand</td><td>เวกเตอร์</td><td>ต่อเนื่อง</td><td>ODbL</td></tr>
+<tr><td>36</td><td>D</td><td>ข้อมูลสุขภาพ (HDC)</td><td>กระทรวงสาธารณสุข</td><td>Dashboard/API</td><td>hdcservice.moph.go.th</td><td>ระดับพื้นที่</td><td>ต่อเนื่อง</td><td>สธ.</td></tr>
+<tr><td>37</td><td>E</td><td>Longdo Map API</td><td>Longdo</td><td>Tile/JS API</td><td>map.longdo.com</td><td>tiles</td><td>ต่อเนื่อง</td><td>ฟรี/API key</td></tr>
+<tr><td>38</td><td>E</td><td>OpenStreetMap Tiles</td><td>OSMF</td><td>XYZ tile</td><td>tile.openstreetmap.org</td><td>tiles</td><td>ต่อเนื่อง</td><td>ODbL</td></tr>
+<tr><td>39</td><td>E</td><td>Esri World Imagery</td><td>Esri</td><td>REST tile</td><td>ArcGIS World_Imagery</td><td>tiles</td><td>ต่อเนื่อง</td><td>Esri terms</td></tr>
+<tr><td>40</td><td>E</td><td>GEE Tile Service</td><td>Google EE</td><td>REST XYZ tile</td><td>ee.data.getMapId</td><td>ตามชั้น</td><td>ตามคำนวณ</td><td>EE ToS</td></tr>
+</table>
+
+<p style="color:#777;font-size:11px;margin-top:20px;">เอกสารนี้เปิดใน Microsoft Word ได้โดยตรง (File → Open) และบันทึกเป็น .docx ได้ · ตารางฉบับเต็มพร้อมคอลัมน์ "การใช้งานในแอป" อยู่ในไฟล์ CSV</p>
+
+</body>
+</html>

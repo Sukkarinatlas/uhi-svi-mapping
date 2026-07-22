@@ -1,0 +1,21 @@
+# dependencies / build
+node_modules/
+dist/
+.vite/
+
+# python
+.venv/
+__pycache__/
+*.pyc
+backend/**/cache_*/
+
+# large raw source data (reproducible from public sources — see backend/README.md)
+data/source/
+
+# stale/duplicate output folder left at repo root (canonical copy is data/output/)
+/output/
+
+# os / editor
+.DS_Store
+Thumbs.db
+*.log

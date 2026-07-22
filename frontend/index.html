@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UHI &amp; SVI Mapping — เกาะความร้อนเมืองและความเปราะบางทางสังคม</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="scroll-thin">
+  <!-- NAV -->
+  <header class="fixed top-0 inset-x-0 z-50">
+    <nav class="glass mx-auto mt-3 max-w-6xl rounded-2xl px-4 py-2.5 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2.5">
+        <span class="grid place-items-center h-9 w-9 rounded-xl bg-gradient-to-br from-brand-500 to-orange-500 text-lg">🌡️</span>
+        <span class="font-bold tracking-tight">UHI<span class="text-brand-400">·</span>SVI</span>
+      </a>
+      <div class="hidden md:flex items-center gap-1 text-sm">
+        <a href="#about" class="btn-ghost">ที่มา</a>
+        <a href="#uhi" class="btn-ghost">UHI คืออะไร</a>
+        <a href="#method" class="btn-ghost">วิธีการ</a>
+        <a href="#data" class="btn-ghost">แหล่งข้อมูล</a>
+      </div>
+      <a href="map.html" class="btn-primary">เปิดแผนที่ <span aria-hidden>→</span></a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="relative min-h-screen hero-grid overflow-hidden flex items-center">
+    <div class="absolute -top-40 -right-40 h-[520px] w-[520px] rounded-full bg-orange-500/20 blur-3xl"></div>
+    <div class="absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-brand-500/20 blur-3xl"></div>
+    <div class="mx-auto max-w-6xl px-6 pt-28 pb-16 grid lg:grid-cols-2 gap-10 items-center relative">
+      <div>
+        <span class="chip mb-5"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span> Geo-AI · Vibe Coding · GISTDA</span>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-[1.05] tracking-tight">
+          วิเคราะห์<span class="text-gradient">เกาะความร้อนเมือง</span><br>ควบคู่<span class="text-gradient">ความเปราะบางทางสังคม</span>
+        </h1>
+        <p class="mt-5 text-slate-300 text-lg max-w-xl">
+          แอปพลิเคชันแผนที่ที่ซ้อนทับอุณหภูมิพื้นผิว (LST) กับความหนาแน่นประชากรรายตำบล
+          เพื่อชี้เป้า <b class="text-white">พื้นที่วิกฤตทางความร้อนที่มีคนอยู่หนาแน่น</b> — พื้นที่ที่ควรได้รับการดูแลก่อน
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="map.html" class="btn-primary text-base px-5 py-3">🗺️ เริ่มสำรวจแผนที่</a>
+          <a href="#about" class="btn-ghost text-base px-5 py-3 border border-white/10">อ่านที่มาของโครงการ</a>
+        </div>
+        <div class="mt-10 grid grid-cols-3 gap-4 max-w-md">
+          <div><div class="kpi-value">92</div><div class="kpi-label">ตำบล</div></div>
+          <div><div class="kpi-value">1.65M</div><div class="kpi-label">ประชากร</div></div>
+          <div><div class="kpi-value">~39°C</div><div class="kpi-label">LST เฉลี่ย</div></div>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="card animate-float p-3 rotate-1">
+          <img src="/data/uhi/LST.png" alt="LST preview"
+               class="rounded-xl w-full aspect-square object-contain bg-slate-900/60"/>
+          <div class="absolute -bottom-4 -left-4 glass rounded-xl px-3 py-2 text-xs">
+            🔥 LST composite · Landsat 8/9 · มี.ค.–พ.ค. 2025
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="#about" class="absolute bottom-6 left-1/2 -translate-x-1/2 text-slate-400 text-sm animate-bounce">↓ เลื่อนลง</a>
+  </section>
+
+  <!-- ABOUT / WHY -->
+  <section id="about" class="mx-auto max-w-6xl px-6 py-20">
+    <div class="reveal">
+      <h2 class="text-3xl md:text-4xl font-bold">ทำไมต้องมีแอปนี้?</h2>
+      <p class="mt-4 text-slate-300 max-w-3xl text-lg">
+        เมืองที่ขยายตัวทำให้พื้นผิวคอนกรีตดูดซับและกักเก็บความร้อน เกิดปรากฏการณ์
+        <b class="text-white">เกาะความร้อนเมือง (Urban Heat Island)</b> ส่งผลต่อสุขภาพ ค่าไฟ และคุณภาพชีวิต
+        โดยเฉพาะกลุ่มเปราะบาง เช่น ผู้สูงอายุ เด็ก และชุมชนหนาแน่น
+        การซ้อนทับ “ความร้อน” กับ “คน” ช่วยให้วางแผนพื้นที่สีเขียว/มาตรการบรรเทาได้ตรงจุด
+      </p>
+    </div>
+    <div class="mt-10 grid md:grid-cols-3 gap-5">
+      <div class="card reveal"><div class="text-3xl">🛰️</div><h3 class="mt-3 font-semibold text-lg">ตรวจวัดจากอวกาศ</h3><p class="mt-2 text-sm text-slate-300">อุณหภูมิพื้นผิว (LST) จากดาวเทียม Landsat 8/9 ความละเอียด 30 ม. ครอบคลุมทั้งจังหวัด</p></div>
+      <div class="card reveal"><div class="text-3xl">👥</div><h3 class="mt-3 font-semibold text-lg">เชื่อมกับประชากรจริง</h3><p class="mt-2 text-sm text-slate-300">ความหนาแน่นประชากรรายตำบลจากทะเบียนราษฎร กรมการปกครอง (ธ.ค. 2568)</p></div>
+      <div class="card reveal"><div class="text-3xl">🎯</div><h3 class="mt-3 font-semibold text-lg">ชี้เป้าพื้นที่วิกฤต</h3><p class="mt-2 text-sm text-slate-300">จัดลำดับตำบลที่ทั้งร้อนและมีคนหนาแน่น เพื่อการวางแผนเชิงพื้นที่</p></div>
+    </div>
+  </section>
+
+  <!-- UHI EXPLAINER -->
+  <section id="uhi" class="border-y border-white/5 bg-white/[0.02]">
+    <div class="mx-auto max-w-6xl px-6 py-20 grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl md:text-4xl font-bold">UTFVI — วัดความรุนแรงของเกาะความร้อน</h2>
+        <p class="mt-4 text-slate-300 text-lg">ใช้ดัชนี <b class="text-white">Urban Thermal Field Variance Index</b></p>
+        <div class="mt-4 card font-mono text-brand-300 text-lg">UTFVI = (LST − LST<sub>เฉลี่ย</sub>) / LST</div>
+        <p class="mt-4 text-sm text-slate-400">ค่ายิ่งสูง = ความร้อนสะสมเทียบกับค่าเฉลี่ยยิ่งรุนแรง จำแนกเป็น 6 ระดับตามงานวิจัย (Zhang et al.)</p>
+      </div>
+      <div class="reveal grid grid-cols-2 gap-3">
+        <div class="card flex items-center gap-3"><span class="h-5 w-5 rounded" style="background:#1a9850"></span>None · ไม่มี</div>
+        <div class="card flex items-center gap-3"><span class="h-5 w-5 rounded" style="background:#66bd63"></span>Weak · อ่อน</div>
+        <div class="card flex items-center gap-3"><span class="h-5 w-5 rounded" style="background:#fee08b"></span>Middle · ปานกลาง</div>
+        <div class="card flex items-center gap-3"><span class="h-5 w-5 rounded" style="background:#fdae61"></span>Strong · สูง</div>
+        <div class="card flex items-center gap-3"><span class="h-5 w-5 rounded" style="background:#f46d43"></span>Stronger · สูงมาก</div>
+        <div class="card flex items-center gap-3"><span class="h-5 w-5 rounded" style="background:#d73027"></span>Strongest · รุนแรงสุด</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section id="method" class="mx-auto max-w-6xl px-6 py-20">
+    <h2 class="text-3xl md:text-4xl font-bold reveal">ขั้นตอนการทำงาน</h2>
+    <div class="mt-10 grid md:grid-cols-4 gap-5">
+      <div class="card reveal"><div class="chip">ขั้นที่ 1</div><h3 class="mt-3 font-semibold">รวบรวมภาพดาวเทียม</h3><p class="mt-2 text-sm text-slate-300">Landsat 8/9 C2 L2 (ST_B10) ฤดูร้อน มี.ค.–พ.ค. 2025 กรองเมฆ &lt; 20%</p></div>
+      <div class="card reveal"><div class="chip">ขั้นที่ 2</div><h3 class="mt-3 font-semibold">คำนวณ LST &amp; UTFVI</h3><p class="mt-2 text-sm text-slate-300">แปลงเป็น °C, median composite, คำนวณดัชนีและจำแนกระดับความรุนแรง</p></div>
+      <div class="card reveal"><div class="chip">ขั้นที่ 3</div><h3 class="mt-3 font-semibold">ประชากรรายตำบล</h3><p class="mt-2 text-sm text-slate-300">ดึงทะเบียนราษฎร DOPA ธ.ค. 2568 คำนวณความหนาแน่น (คน/ตร.กม.)</p></div>
+      <div class="card reveal"><div class="chip">ขั้นที่ 4</div><h3 class="mt-3 font-semibold">ซ้อนทับ &amp; วิเคราะห์</h3><p class="mt-2 text-sm text-slate-300">แสดงบนแผนที่ 3D โต้ตอบได้ พร้อมแดชบอร์ดกราฟและการค้นหารายพื้นที่</p></div>
+    </div>
+  </section>
+
+  <!-- DATA SOURCES -->
+  <section id="data" class="border-t border-white/5 bg-white/[0.02]">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <h2 class="text-3xl md:text-4xl font-bold reveal">แหล่งข้อมูล</h2>
+      <div class="mt-8 grid md:grid-cols-2 gap-5">
+        <div class="card reveal"><h3 class="font-semibold">🛰️ Landsat 8/9 Collection 2 L2</h3><p class="mt-2 text-sm text-slate-300">Surface Temperature (ST_B10) ผ่าน Microsoft Planetary Computer — สูตรเดียวกับสคริปต์ Google Earth Engine</p></div>
+        <div class="card reveal"><h3 class="font-semibold">👥 ทะเบียนราษฎร (DOPA)</h3><p class="mt-2 text-sm text-slate-300">จำนวนประชากรรายตำบล ระบบ statMONTH ธ.ค. 2568 รวมทั้งจังหวัด 1,645,985 คน</p></div>
+        <div class="card reveal"><h3 class="font-semibold">🗺️ ขอบเขตการปกครอง</h3><p class="mt-2 text-sm text-slate-300">จังหวัด/อำเภอ/ตำบล (GISTDA) และ COD RTSD/HDX สำหรับพื้นที่</p></div>
+        <div class="card reveal"><h3 class="font-semibold">🌐 แผนที่ฐาน</h3><p class="mt-2 text-sm text-slate-300">OpenStreetMap, OpenTopoMap และภาพดาวเทียม Sphere (GISTDA)</p></div>
+      </div>
+      <div class="mt-12 text-center reveal">
+        <a href="map.html" class="btn-primary text-lg px-7 py-3.5">🚀 เปิดแอปแผนที่</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="mx-auto max-w-6xl px-6 py-10 text-sm text-slate-500 flex flex-wrap justify-between gap-4">
+    <span>© 2025 UHI·SVI Mapping — GISTDA GeoAI &amp; Vibe Coding Material</span>
+    <span>ข้อมูลเพื่อการศึกษา/สาธิต · LST มี.ค.–พ.ค. 2025 · ประชากร ธ.ค. 2568</span>
+  </footer>
+
+  <script type="module" src="/src/story/story.js"></script>
+</body>
+</html>

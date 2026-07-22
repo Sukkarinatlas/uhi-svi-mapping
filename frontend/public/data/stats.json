@@ -1,0 +1,259 @@
+{
+ "province": {
+  "name_th": "ชลบุรี",
+  "name_en": "Chon Buri",
+  "tambons": 92,
+  "pop_total": 1645985,
+  "male": 798596,
+  "female": 847389,
+  "area_km2": 4504.8,
+  "density": 365.4,
+  "lst_mean": 38.98206329345703,
+  "period": "2025-03-01..2025-05-31"
+ },
+ "by_amphoe": [
+  {
+   "amphoe_th": "เมืองชลบุรี",
+   "tambons": 18,
+   "pop": 352412,
+   "male": 169345,
+   "female": 183067,
+   "area": 261.1555,
+   "lst": 40.45,
+   "density": 1349.4
+  },
+  {
+   "amphoe_th": "บางละมุง",
+   "tambons": 8,
+   "pop": 351391,
+   "male": 161906,
+   "female": 189485,
+   "area": 546.5347,
+   "lst": 40.91,
+   "density": 642.9
+  },
+  {
+   "amphoe_th": "ศรีราชา",
+   "tambons": 8,
+   "pop": 337405,
+   "male": 163308,
+   "female": 174097,
+   "area": 612.2249,
+   "lst": 40.83,
+   "density": 551.1
+  },
+  {
+   "amphoe_th": "สัตหีบ",
+   "tambons": 5,
+   "pop": 163448,
+   "male": 86585,
+   "female": 76863,
+   "area": 284.4328,
+   "lst": 39.8,
+   "density": 574.6
+  },
+  {
+   "amphoe_th": "พนัสนิคม",
+   "tambons": 20,
+   "pop": 126451,
+   "male": 60997,
+   "female": 65454,
+   "area": 481.6798,
+   "lst": 37.63,
+   "density": 262.5
+  },
+  {
+   "amphoe_th": "บ้านบึง",
+   "tambons": 8,
+   "pop": 112043,
+   "male": 54372,
+   "female": 57671,
+   "area": 591.4863,
+   "lst": 39.83,
+   "density": 189.4
+  },
+  {
+   "amphoe_th": "พานทอง",
+   "tambons": 11,
+   "pop": 84533,
+   "male": 41355,
+   "female": 43178,
+   "area": 165.1906,
+   "lst": 37.7,
+   "density": 511.7
+  },
+  {
+   "amphoe_th": "บ่อทอง",
+   "tambons": 6,
+   "pop": 49597,
+   "male": 24728,
+   "female": 24869,
+   "area": 831.0505,
+   "lst": 38.04,
+   "density": 59.7
+  },
+  {
+   "amphoe_th": "เกาะจันทร์",
+   "tambons": 2,
+   "pop": 39987,
+   "male": 21627,
+   "female": 18360,
+   "area": 267.5905,
+   "lst": 39.06,
+   "density": 149.4
+  },
+  {
+   "amphoe_th": "หนองใหญ่",
+   "tambons": 5,
+   "pop": 23937,
+   "male": 12022,
+   "female": 11915,
+   "area": 456.3502,
+   "lst": 37.97,
+   "density": 52.5
+  },
+  {
+   "amphoe_th": "เกาะสีชัง",
+   "tambons": 1,
+   "pop": 4781,
+   "male": 2351,
+   "female": 2430,
+   "area": 7.0676,
+   "lst": 39.78,
+   "density": 676.5
+  }
+ ],
+ "uhi_class_counts": {
+  "0": 92690,
+  "1": 3251,
+  "2": 3207,
+  "3": 3275,
+  "4": 3240,
+  "5": 78160
+ },
+ "top_density": [
+  {
+   "tambon_th": "ศรีราชา",
+   "amphoe_th": "ศรีราชา",
+   "density": 10612.4,
+   "total_pop": 25250
+  },
+  {
+   "tambon_th": "มะขามหย่ง",
+   "amphoe_th": "เมืองชลบุรี",
+   "density": 10255.2,
+   "total_pop": 4782
+  },
+  {
+   "tambon_th": "บ้านโขด",
+   "amphoe_th": "เมืองชลบุรี",
+   "density": 6589.0,
+   "total_pop": 5258
+  },
+  {
+   "tambon_th": "บางปลาสร้อย",
+   "amphoe_th": "เมืองชลบุรี",
+   "density": 4949.7,
+   "total_pop": 11996
+  },
+  {
+   "tambon_th": "บางทราย",
+   "amphoe_th": "เมืองชลบุรี",
+   "density": 4295.5,
+   "total_pop": 10899
+  },
+  {
+   "tambon_th": "บ้านสวน",
+   "amphoe_th": "เมืองชลบุรี",
+   "density": 3881.7,
+   "total_pop": 65237
+  },
+  {
+   "tambon_th": "พนัสนิคม",
+   "amphoe_th": "พนัสนิคม",
+   "density": 3622.1,
+   "total_pop": 9538
+  },
+  {
+   "tambon_th": "บ้านปึก",
+   "amphoe_th": "เมืองชลบุรี",
+   "density": 3082.4,
+   "total_pop": 9654
+  },
+  {
+   "tambon_th": "เสม็ด",
+   "amphoe_th": "เมืองชลบุรี",
+   "density": 2638.0,
+   "total_pop": 38041
+  },
+  {
+   "tambon_th": "แสนสุข",
+   "amphoe_th": "เมืองชลบุรี",
+   "density": 2483.2,
+   "total_pop": 38367
+  }
+ ],
+ "top_hot": [
+  {
+   "tambon_th": "ทุ่งสุขลา",
+   "amphoe_th": "ศรีราชา",
+   "lst_mean": 45.45,
+   "total_pop": 42584
+  },
+  {
+   "tambon_th": "บ้านเก่า",
+   "amphoe_th": "พานทอง",
+   "lst_mean": 43.71,
+   "total_pop": 6873
+  },
+  {
+   "tambon_th": "ดอนหัวฬ่อ",
+   "amphoe_th": "เมืองชลบุรี",
+   "lst_mean": 43.5,
+   "total_pop": 14519
+  },
+  {
+   "tambon_th": "หนองปรือ",
+   "amphoe_th": "บางละมุง",
+   "lst_mean": 43.29,
+   "total_pop": 163357
+  },
+  {
+   "tambon_th": "บางละมุง",
+   "amphoe_th": "บางละมุง",
+   "lst_mean": 43.1,
+   "total_pop": 30180
+  },
+  {
+   "tambon_th": "บึง",
+   "amphoe_th": "ศรีราชา",
+   "lst_mean": 42.67,
+   "total_pop": 54522
+  },
+  {
+   "tambon_th": "หนองปลาไหล",
+   "amphoe_th": "บางละมุง",
+   "lst_mean": 42.48,
+   "total_pop": 27906
+  },
+  {
+   "tambon_th": "ห้วยกะปิ",
+   "amphoe_th": "เมืองชลบุรี",
+   "lst_mean": 42.15,
+   "total_pop": 26550
+  },
+  {
+   "tambon_th": "สระสี่เหลี่ยม",
+   "amphoe_th": "พนัสนิคม",
+   "lst_mean": 42.03,
+   "total_pop": 7100
+  },
+  {
+   "tambon_th": "นาป่า",
+   "amphoe_th": "เมืองชลบุรี",
+   "lst_mean": 41.94,
+   "total_pop": 44329
+  }
+ ],
+ "age_note": "registered population, DOPA statMONTH Dec 2568 (2025)"
+}

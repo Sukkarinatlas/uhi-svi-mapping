@@ -1,0 +1,156 @@
+<mxfile host="app.diagrams.net" modified="2026-07-22T00:00:00.000Z" agent="Claude Code" version="24.7.17" type="device">
+  <diagram name="UHI-SVI Architecture" id="uhi-svi-architecture">
+    <mxGraphModel dx="1600" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- TITLE -->
+        <mxCell id="title1" value="สถาปัตยกรรมระบบสำหรับ Web Map App วิเคราะห์ UHI และ SVI (Thailand)" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="20" width="700" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- FRONTEND OUTER -->
+        <mxCell id="frontendOuter" value="Frontend: เว็บแอปพลิเคชัน (Web Map App)" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;fontSize=14;fontStyle=1;fillColor=#FFFFFF;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="520" y="90" width="640" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="frontendChild1" value="เครื่องมือแผนที่&#10;(Leaflet/OpenLayers)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ED7D31;strokeColor=#C55A11;fontColor=#FFFFFF;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="550" y="155" width="270" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="frontendChild2" value="เครื่องมือแดชบอร์ด&#10;(Chart.js)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ED7D31;strokeColor=#C55A11;fontColor=#FFFFFF;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="840" y="155" width="270" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- INTEGRATION OUTER -->
+        <mxCell id="integrationOuter" value="Integration &amp; Processing Layer&#10;ชั้นบูรณาการและประมวลผล" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;fontSize=14;fontStyle=1;fillColor=#FBE4D5;strokeColor=#C55A11;" vertex="1" parent="1">
+          <mxGeometry x="520" y="300" width="640" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="integrationChild1" value="การคำนวณดัชนี SVI" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ED7D31;strokeColor=#C55A11;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="550" y="370" width="270" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="integrationChild2" value="การระบุพื้นที่เกาะความร้อน UHI" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ED7D31;strokeColor=#C55A11;fontColor=#FFFFFF;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="840" y="370" width="270" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- CYLINDER : User-Generated Data / Cache -->
+        <mxCell id="cylinder1" value="User-Generated&#10;Data/Cache" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#BFBFBF;strokeColor=#595959;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1125" y="440" width="80" height="100" as="geometry" />
+        </mxCell>
+
+        <!-- LEFT OUTER : Web Service Data Sources -->
+        <mxCell id="leftOuter" value="แหล่งข้อมูลเว็บเซอร์วิส&#10;(Web Service Data Sources)" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;fontSize=14;fontStyle=1;fillColor=#DAE8FC;strokeColor=#6C8EBF;" vertex="1" parent="1">
+          <mxGeometry x="20" y="300" width="460" height="540" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leftRow1a" value="ขอบเขตการปกครอง&#10;(WMS/WFS)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2F528F;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="370" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="leftRow1b" value="Living Atlas&#10;(Esri)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#BDD7EE;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="370" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leftRow2a" value="ข้อมูลประชากรรายตำบล&#10;(WMS/WFS)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2F528F;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="460" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="leftRow2b" value="Living Atlas&#10;(Esri)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#BDD7EE;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="460" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leftRow3a" value="การใช้ที่ดิน LULC&#10;(WMS/WFS)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2F528F;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="550" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="leftRow3b" value="ดินออนไลน์&#10;(LDD)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#BDD7EE;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="550" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leftRow4a" value="สถิติสังคม&#10;และความเสี่ยง" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=#2F528F;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="leftRow4b" value="API สปช.&#10;(NESDC)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#BDD7EE;strokeColor=#6C8EBF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="260" y="640" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- RIGHT OUTER : GEE Datasets & API -->
+        <mxCell id="rightOuter" value="แหล่งข้อมูล Google Earth Engine&#10;(GEE Datasets &amp; API)" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;fontSize=14;fontStyle=1;fillColor=#FFF2CC;strokeColor=#D6B656;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="300" width="460" height="540" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rightRow1a" value="JAXA/GCOM-C/&#10;L3/LAND/LST" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ED7D31;strokeColor=#C55A11;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="370" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rightRow1b" value="ข้อมูล LST&#10;ต่อเนื่อง" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE599;strokeColor=#D6B656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="370" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rightRow2a" value="Landsat 8/&#10;Sentinel-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ED7D31;strokeColor=#C55A11;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="480" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rightRow2b" value="LST&#10;ความละเอียดสูง" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE599;strokeColor=#D6B656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="480" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="rightRow3a" value="GEE Script API" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ED7D31;strokeColor=#C55A11;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="590" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rightRow3b" value="การวิเคราะห์ UHI&#10;แบบ Near-Realtime" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFE599;strokeColor=#D6B656;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="590" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- BOTTOM OUTER : Static Data Sources -->
+        <mxCell id="bottomOuter" value="แหล่งข้อมูลสแตติก&#10;(Static Data Sources - on Server)" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;fontSize=14;fontStyle=1;fillColor=#E2EFDA;strokeColor=#548235;" vertex="1" parent="1">
+          <mxGeometry x="520" y="600" width="640" height="240" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bottomRow1a" value="ประชากรความละเอียดสูง&#10;(TIFF)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#548235;strokeColor=#375623;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="550" y="650" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bottomRow1b" value="HDX (Humdata)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#A9D18E;strokeColor=#548235;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="840" y="650" width="270" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bottomRow2a" value="Shapefile ขอบเขต/ที่ดิน" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#548235;strokeColor=#375623;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="550" y="720" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bottomRow2b" value="GISTDA, LDD" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#A9D18E;strokeColor=#548235;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="840" y="720" width="270" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bottomRow3a" value="สำมะโนประชากร&#10;(CSV/Database)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#548235;strokeColor=#375623;fontColor=#FFFFFF;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="550" y="790" width="270" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bottomRow3b" value="สสช. (NSO)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#A9D18E;strokeColor=#548235;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="840" y="790" width="270" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- ARROWS -->
+
+        <!-- Frontend <-> Integration -->
+        <mxCell id="edge1" value="GeoJSON/Tiles" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.35;exitY=0;entryX=0.35;entryY=1;endArrow=block;startArrow=none;fontSize=11;" edge="1" parent="1" source="integrationOuter" target="frontendOuter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge2" value="Processed Map Tiles / Analytics" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.65;exitY=1;entryX=0.65;entryY=0;endArrow=block;startArrow=none;fontSize=11;" edge="1" parent="1" source="frontendOuter" target="integrationOuter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Left Data Sources -> Integration -->
+        <mxCell id="edge3" value="GeoJSON/Tiles" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;endArrow=block;startArrow=none;fontSize=11;" edge="1" parent="1" source="leftOuter" target="integrationOuter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- Static Data <-> Integration -->
+        <mxCell id="edge4" value="Download/Load" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.35;exitY=0;entryX=0.35;entryY=1;endArrow=block;startArrow=none;fontSize=11;" edge="1" parent="1" source="bottomOuter" target="integrationOuter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge5" value="Compute API" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.65;exitY=1;entryX=0.65;entryY=0;endArrow=block;startArrow=none;fontSize=11;" edge="1" parent="1" source="integrationOuter" target="bottomOuter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- GEE -> Integration -->
+        <mxCell id="edge6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;endArrow=block;startArrow=none;fontSize=11;" edge="1" parent="1" source="rightOuter" target="integrationOuter">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
