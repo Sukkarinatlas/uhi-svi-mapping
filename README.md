@@ -58,6 +58,8 @@ UHI_WEB/
 
 ## 🚀 เริ่มต้นใช้งาน
 
+> หมายเหตุ: สำหรับ frontend ต้องใช้ Node.js 22+ เนื่องจาก CesiumJS dependency มี requirement ของ Node >= 22
+
 ```bash
 # frontend
 cd frontend
@@ -71,6 +73,16 @@ cd backend
 pip install -r requirements.txt
 # ดูลำดับสคริปต์ใน backend/README.md
 ```
+
+## ☁️ การ Deploy ไปยัง GitHub Pages
+
+1. ตั้งค่า repository ให้เป็น public หากต้องการเปิดใช้งานสาธารณะได้ทันที
+2. เปิด Settings → Pages → Source = GitHub Actions
+3. ทุกครั้งที่ push ไปที่ `main` GitHub Actions จะ build frontend แล้ว deploy อัตโนมัติ
+4. URL ของหน้า live demo จะอยู่ที่:
+   `https://sukkarinatlas.github.io/uhi-svi-mapping/`
+
+ไฟล์ workflow อยู่ที่ [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
 
 ## 🗃️ แหล่งข้อมูล
 

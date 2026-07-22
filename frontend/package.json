@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Urban Heat Island & Social Vulnerability Mapping Application (Chon Buri)",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
